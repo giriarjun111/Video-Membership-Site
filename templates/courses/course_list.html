@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+        <h1 class="mb-4">Available Courses</h1>
+
+        <div class="row">
+            {% for course in object_list %}
+                <div class="col-md-4 mb-4">
+                    <!-- Course Card -->
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0">{{ course.title }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ course.description|truncatewords:50 }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for membership in course.allowed_membership.all %}
+                                <li class="list-group-item"><span class="badge bg-secondary">{{ membership.membership_type }}</span></li>
+                            {% endfor %}
+                        </ul>
+                        <div class="card-footer">
+                            <a href="{{ course.get_absolute_url }}" class="btn btn-primary btn-block">View Course</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+</div>
+
+
+{% endblock content %}
+
+

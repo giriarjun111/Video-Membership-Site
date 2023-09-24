@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %} 
+
+<script src="https://js.stripe.com/v3/"></script>
+
+
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Select a Membership</h1>
+
+    <div class="row">
+    	<h1>You have selected <b>{{selected_membership}}</b> model.</h1>
+    	<p>Price: <strong>${{selected_membership.price}}</strong>/month</p>
+    </div>
+
+    <form action="{% url 'memberships:payment' %}" method="post" id="payment-form">
+      {% csrf_token %}
+      <div id="card-element">
+        <!-- Stripe card Element will be inserted here -->
+      </div>
+      <button type="submit">Submit Payment</button>
+    </form>
+
+</div>
+
+
+<script>
+  // Initialize Stripe
+  var stripe = Stripe("{{ publishkey }}"); // Use the publishable key from your Django settings
+  var elements = stripe.elements();
+
+  // Create an instance of the card Element
+  var card = elements.create('card');
+
+  // Add an instance of the card Element into the `card-element` div
+  card.mount('#card-element');
+</script>
+
+
+{% endblock content %} 

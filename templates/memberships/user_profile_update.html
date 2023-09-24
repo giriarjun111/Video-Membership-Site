@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="mb-4">Update Profile</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea class="form-control" id="bio" name="bio" rows="3">{{ form.bio.value|default_if_none:"" }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Profile</button>
+          <a href="{% url 'memberships:profile' user.username %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

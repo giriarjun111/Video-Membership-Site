@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block coontent %} 
+
+<div class="container" >
+	<h1 class="text-center">Select the membership</h1>
+
+	<div class="row">
+		{% for obj in object_list %}
+			<div class="col-sm-4 col-md-4">
+				<h2>{{obj.membership_type}}</h2>
+				<p>Price: {{obj.price}}<small>/month</small></p>
+				<h4>Included Courses:</h4>
+				<ul>
+					{% for x in obj.course_set.all %}
+						<a href="{{x.get_absolute_url }}"><li>{{x.title}}</li></a>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endblock coontent %} 
+
+
+{% block content %} 
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Select a Membership</h1>
+
+    <div class="row">
+        {% for obj in object_list %}
+            <div class="col-sm-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">{{ obj.membership_type }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Price: ${{ obj.price }} <small>/month</small></h5>
+                        <h6>Included Courses:</h6>
+                        <ul class="list-group list-group-flush">
+                            {% for x in obj.course_set.all %}
+                                <li class="list-group-item">
+                                    <a href="{{ x.get_absolute_url }}">{{ x.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                    	{% if obj.membership_type != "Free" %}
+                    	<form method="POST" action="{% url 'memberships:select' %}">
+                    		{% csrf_token %}
+                    		{% if obj.membership_type != current_membership %}
+                    			<button class="btn btn-warning"> Select</button>
+                    		{% else %}
+                    			<small>THis is your currnet membership</small>
+                    		{% endif %}
+                    		<input type="hidden" name="membership_type" value="{{ obj.membership_type }}">
+                    	</form>
+                    	{% endif %}
+                    </div>
+                    <!-- {% if obj.membership_type != "Free" %}
+                    	{% if obj.membership_type != current_membership %}
+						    <div class="card-footer d-grid gap-2">
+						        <a href="#" class="btn btn-success btn-block">Select Plan</a>
+						    </div>
+						{% else %}
+							<div class="card-footer d-grid gap-2">
+						        <a href="#" class="btn btn-success btn-block">THis is your current membership</a>
+						    </div>
+						{% endif %}
+					{% endif %}
+ -->
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %} 

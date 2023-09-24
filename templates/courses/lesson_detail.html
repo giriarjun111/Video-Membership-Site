@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+        {% if object is not None %}
+            <!-- Lesson Details -->
+            <h1 class="mb-4">{{ object.title }}</h1>
+            <img src="{{ object.thumbnail.url}}" alt="image">
+        {% else %}
+            <!-- Upgrade Membership Section -->
+            <div class="card text-center">
+                <div class="card-header">
+                    Upgrade Required
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Access Restricted</h5>
+                    <p class="card-text">Upgrade your membership to access this lesson and many more benefits.</p>
+                    <a href="#" class="btn btn-primary">Upgrade Now</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Exclusive content for premium members.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
